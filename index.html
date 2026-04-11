@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink PDA Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>PDA Simulator</h1>
+            <p>Pushdown Automaton Visualization</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Left: Definitions -->
+            <section class="panel definition-panel">
+                <header class="panel-header">
+                    <h2>Machine Definition</h2>
+                </header>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Start State</label>
+                        <input type="text" id="start-state" value="q0" placeholder="e.g. q0">
+                    </div>
+                    <div class="form-group">
+                        <label>Accept States (comma separated)</label>
+                        <input type="text" id="accept-states" value="q2" placeholder="e.g. q2, q3">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Stack Symbol</label>
+                        <input type="text" id="init-stack" value="Z0" placeholder="e.g. Z0">
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <h3>Transitions</h3>
+                    <div class="transition-form">
+                        <div class="transition-inputs">
+                            <input type="text" id="t-curr-state" placeholder="State" title="Current State">
+                            <input type="text" id="t-input" placeholder="Input" title="Input Symbol (use 'e' for epsilon)">
+                            <input type="text" id="t-stack-top" placeholder="Pop" title="Stack Top to Pop">
+                            <span>→</span>
+                            <input type="text" id="t-next-state" placeholder="Next" title="Next State">
+                            <input type="text" id="t-stack-push" placeholder="Push" title="Symbols to Push (leftmost is new top, 'e' for none)">
+                        </div>
+                        <button id="add-transition-btn" class="btn primary-btn">+ Add</button>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="transitions-table">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Input</th>
+                                    <th>Pop</th>
+                                    <th>Next State</th>
+                                    <th>Push</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transitions-list">
+                                <!-- Transitions go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="preset-controls">
+                        <button id="load-preset-btn" class="btn secondary-btn">Load a^n b^n Preset</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: Simulation -->
+            <section class="panel simulation-panel">
+                <header class="panel-header">
+                    <h2>Simulation</h2>
+                    <div class="status-indicator">
+                        Status: <span id="sim-status" class="status-text idle">Idle</span>
+                    </div>
+                </header>
+                <div class="panel-body">
+                    <div class="input-setup">
+                        <input type="text" id="input-string" placeholder="Enter input string... (e.g. aabb)" value="aabb">
+                        <button id="load-input-btn" class="btn primary-btn">Load</button>
+                    </div>
+
+                    <div class="controls-group">
+                        <button id="btn-step" class="btn action-btn control-btn" disabled>Step Forward</button>
+                        <button id="btn-play" class="btn action-btn control-btn" disabled>Play</button>
+                        <button id="btn-pause" class="btn action-btn control-btn" disabled>Pause</button>
+                        <button id="btn-reset" class="btn warning-btn control-btn">Reset</button>
+                    </div>
+
+                    <div class="visualization-area">
+                        <!-- Tape Visualization -->
+                        <div class="viz-section">
+                            <h3>Input Tape</h3>
+                            <div class="tape-container" id="tape-container">
+                                <!-- Tape cells will be injected here -->
+                            </div>
+                        </div>
+
+                        <div class="viz-row">
+                            <!-- State Visualization -->
+                            <div class="viz-section state-viz-section">
+                                <h3>Current State</h3>
+                                <div class="state-bubble" id="current-state-bubble">
+                                    -
+                                </div>
+                            </div>
+
+                            <!-- Stack Visualization -->
+                            <div class="viz-section stack-viz-section">
+                                <h3>Stack</h3>
+                                <div class="stack-container">
+                                    <ul id="stack-items" class="stack-items">
+                                        <!-- Stack symbols injected here -->
+                                    </ul>
+                                    <div class="stack-base">Top is up</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="log-section">
+                        <h3>Event Log</h3>
+                        <div id="event-log" class="log-container">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
